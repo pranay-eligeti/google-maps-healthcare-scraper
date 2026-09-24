@@ -15,7 +15,7 @@ def normalize_text(value: Any) -> str:
 
 
 def normalize_phone(value: Any) -> str:
-    digits = re.sub(r"\\D+", "", normalize_text(value))
+    digits = re.sub(r"\D+", "", normalize_text(value))
     if len(digits) == 11 and digits.startswith("1"):
         digits = digits[1:]
     if len(digits) != 10:
