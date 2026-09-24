@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Iterable
 
-EMAIL_RE = re.compile(r"\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b", re.I)
+EMAIL_RE = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.I)
 
 
 def extract_emails(html: str) -> list[str]:
