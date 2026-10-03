@@ -49,7 +49,7 @@ HTML page / synthetic fixture
                 CSV output
 ~~~
 
-See docs/architecture.md for design notes.
+See [architecture notes](docs/architecture.md) for design notes.
 
 ## Repository structure
 
@@ -84,7 +84,7 @@ cd google-maps-healthcare-scraper
 python -m venv .venv
 
 # Windows
-.venv\\Scripts\\activate
+.venv\Scripts\activate
 
 # macOS/Linux
 source .venv/bin/activate
@@ -100,6 +100,12 @@ python -m src.main --fixture sample_data/search_results.html --output output/lis
 ~~~
 
 Expected result: **2 synthetic listings** written to output/listings.csv.
+
+Fixture mode never visits external provider pages. An absent fixture email remains
+empty, making the browser-to-CSV demonstration fully offline. Live `--url` runs
+use best-effort contact discovery for records with missing emails. Parsing expects
+the documented `data-*` listing attributes; this repository does not ship Google
+Maps page selectors or an official Maps API connector.
 
 ### Run tests
 

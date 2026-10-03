@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 env:
   PYTHONPATH: .
 
@@ -19,5 +22,7 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Run tests
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Run offline tests and browser fixture
         run: pytest -q

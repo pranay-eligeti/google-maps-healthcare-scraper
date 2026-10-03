@@ -23,7 +23,7 @@ async def scrape(url_or_path: str, *, fixture: bool, headless: bool, timeout_ms:
     records = [normalize_listing(item) for item in parse_listing_html(html)]
 
     for record in records:
-        if not record["email"] and record["source_url"]:
+        if not fixture and not record["email"] and record["source_url"]:
             try:
                 provider_html = await fetch_html(
                     record["source_url"], headless=headless, timeout_ms=timeout_ms

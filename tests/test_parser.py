@@ -7,6 +7,22 @@ from src.parser import parse_listing_html
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_fixture_browser_export_never_visits_provider_pages(monkeypatch, tmp_path):
+    import asyncio
+    import pandas as pd
+    from src import main
+    from src.exporter import export_csv
+
+    async def forbidden(*args, **kwargs):
+        raise AssertionError("Fixture mode must not visit external provider pages")
+
+    monkeypatch.setattr(main, "fetch_html", forbidden)
+    records = asyncio.run(main.scrape(str(ROOT / "sample_data/search_results.html"), fixture=True, headless=True, timeout_ms=30000))
+    assert len(records) == 2 and records[1]["email"] == ""
+    output = export_csv(records, tmp_path / "output.csv")
+    assert len(pd.read_csv(output)) == 2
+
+
 def test_parse_synthetic_fixture():
     html = (ROOT / "sample_data" / "search_results.html").read_text(encoding="utf-8")
     records = parse_listing_html(html)
